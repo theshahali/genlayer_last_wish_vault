@@ -124,11 +124,11 @@ class LastWishVault(gl.Contract):
         criteria = (
             "Graduated Liveness Equivalence Rule:\n"
             "1. Strict Part: liveness_verified boolean MUST match 100% exactly across all validators.\n"
-            "2. Fuzzy Part: quality_score (0 to 100) must match within a bounded tolerance of +-5 points.\n"
+            "2. Fuzzy Part: quality_score (0 to 100) must match within a bounded tolerance of +-5 points on the same side of the 70 threshold.\n"
             "Independently parse the heartbeat response yourself. "
             "REJECT the leader's proposal if: "
             "(1) the proposed liveness_verified boolean is inconsistent with endpoint liveness in EITHER direction (true when dead/offline or false when live/passing), "
-            "(2) the proposed quality_score deviates by more than +-5 points, or "
+            "(2) the proposed quality_score straddles the 70 decision threshold (e.g. one validator evaluates <70 while another evaluates >=70) or deviates by more than +-5 points, or "
             "(3) the leader claims endpoint_reachable=false when valid response is present. "
             "The output must be valid JSON with keys: endpoint_reachable, liveness_verified, "
             "quality_score, and summary."
