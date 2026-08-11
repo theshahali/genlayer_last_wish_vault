@@ -14,15 +14,15 @@ The `LastWishVault` decision oracle allows account holders to register a livenes
 
 Consensus splits judgment into strict and fuzzy parts:
 1. **Strict Part**: The `liveness_verified` boolean MUST match 100% exactly across all consensus validators because it directly mutates on-chain decision states.
-2. **Fuzzy Part**: The `quality_score` (0–100) must match within a bounded tolerance of $\pm 5$ points.
+2. **Boundary-Bound Fuzzy Part**: The `quality_score` (0–100) must match within a bounded tolerance of $\pm 5$ points **on the same side of the 70 decision threshold**. Proposals where scores straddle the 70 boundary (e.g. 68 vs 73) are strictly rejected.
 
 ---
 
 ## ⚙️ Multi-Step Grace Period State Machine Flow
 
 - `ACTIVE_LIVE`: Heartbeat probe verified intact; liveness attested.
-- `GRACE_PERIOD_WARNING`: 1st heartbeat failure recorded; vault enters grace warning window without triggering immediate succession.
-- `SUCCESSION_READY_INACTIVE`: Confirmed inactivity across grace window; succession decision unlocked.
+- `GRACE_PERIOD_WARNING` (Failure 1): 1st heartbeat failure recorded; vault enters grace warning window without triggering immediate succession.
+- `SUCCESSION_READY_INACTIVE` (Failure 2+): Confirmed inactivity across grace window; succession decision unlocked.
 
 ---
 
